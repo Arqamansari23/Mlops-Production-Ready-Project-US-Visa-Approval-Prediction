@@ -14,17 +14,17 @@ TIMESTAMP: str = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
 @dataclass
 class TrainingPipelineConfig:
     pipeline_name:str=PIPELINE_NAME
-    artitact_dir:str=os.path.join(ARTIFACT_DIR,TIMESTAMP)
+    artifact_dir:str=os.path.join(ARTIFACT_DIR,TIMESTAMP)
     timestamp:str=TIMESTAMP
 
 
 training_pipeline_config:TrainingPipelineConfig=TrainingPipelineConfig()
 
 
-@dataclass
+# All paths of files important for data Ingestion 
 @dataclass
 class DataIngestionConfig:
-    data_ingestion_dir: str = os.path.join(training_pipeline_config.artitact_dir, DATA_INGESTION_DIR_NAME)   
+    data_ingestion_dir: str = os.path.join(training_pipeline_config.artifact_dir, DATA_INGESTION_DIR_NAME)   
     # Full path: artifact/<TIMESTAMP>/data_ingestion
     
     feature_store_file_path: str = os.path.join(data_ingestion_dir, DATA_INGESTION_FEATURE_STORE_DIR, FILE_NAME)
@@ -41,6 +41,22 @@ class DataIngestionConfig:
     
     collection_name: str = DATA_INGESTION_COLLECTION_NAME
     # Collection name: visa_data
+
+
+
+
+
+# All paths of files important for data Validation
+@dataclass
+class DataValidationConfig:
+    data_validation_dir: str = os.path.join(training_pipeline_config.artifact_dir, DATA_VALIDATION_DIR_NAME)
+    # Full path: artifact/<TIMESTAMP>/data_validation
+    
+    drift_report_file_path: str = os.path.join(data_validation_dir, DATA_VALIDATION_DRIFT_REPORT_DIR,
+                                               DATA_VALIDATION_DRIFT_REPORT_FILE_NAME)
+    # Full path: artifact/<TIMESTAMP>/data_validation/drift_report/report.yaml
+
+
 
 
 
